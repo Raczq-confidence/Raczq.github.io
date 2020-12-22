@@ -1,0 +1,208 @@
+/* Here is your custom css styles. */
+/* 设置logo大小 */
+header .brand-logo .logo-img {
+    height: 35px;
+}
+
+/* 设置顶部导航栏字体颜色 */
+.nav-menu .nav-item a,a.button-collapse,i.fa-search {
+    color: #000;
+}
+
+/* 设置顶部导航栏 */
+ul.left.nav-menu {
+    width: 70%;
+    margin-left: -40px;
+}
+
+header .nav-transparent {
+    background-color: #fff !important;
+}
+
+/* 设置导航栏内容区 */
+div#navContainer.nav-wrapper.container ul {
+    margin-left: 5%;
+}
+
+/* 设置搜索按钮位置 */
+header ul.left.nav-menu > li:last-child {
+    float: right;
+    /* margin-right: -40%; */
+}
+
+/* 设置搜索框样式 */
+#searchModal input[type="search"]:focus {
+    border-color: #5c12af;
+}
+
+/* 设置搜索结果的标题样式 */
+.search-result-list .search-result-title {
+    font-weight: 500;
+    color: #6c5ce7;
+}
+
+/* 设置顶部导航栏背景颜色 */
+.bg-color {
+    background-image: linear-gradient(to right, #fff 0%, #fff 100%);
+}
+
+/* 设置移动端左侧导航栏个人信息区域 */
+div.mobile-head {
+    border-bottom: 1px #e3e3e3 solid;
+}
+
+div.mobile-head {
+    background-image: linear-gradient(to right,#293951 0%,#293951 100%);
+}
+
+div.mobile-head div.logo-desc {
+    color: #fff !important;
+}
+
+/* 设置移动端左侧导航栏 */
+ul.mobile-menu-list {
+    margin-top: 10%;
+}
+
+/* 设置背景图大小 */
+.carousel.carousel-slider .carousel-item {
+    height: 77%;
+}
+
+/* 设置背景图的黑色效果 */
+.carousel.carousel-slider .carousel-item::after,.pd-header::after {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.carousel.carousel-slider .carousel-item::after {
+    z-index: 0;
+}
+
+/* 取消背景图变换颜色的动画效果 */
+.bg-cover:after {
+    -webkit-animation: noChange;
+    animation: noChange;
+}
+
+@-webkit-keyframes noChange {
+
+}
+
+@keyframes noChange {
+
+}
+
+/* 设置社交模块的位置 */
+.cover-social-link {
+    top: 19vh;
+}
+
+/* 设置footer样式 */
+.page-footer {
+    height: 13.5rem;
+    /* 使用flex布局使footer中的内容居中显示 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 设置footer背景颜色 */
+.page-footer {
+    background-image: linear-gradient(to right,#293951 0%,#293951 100%);
+}
+
+/* 设置回到顶部按钮 */
+.top-scroll {
+    right: 30px;
+    bottom: 30px;
+}
+
+/* 设置目录显示按钮 */
+#floating-toc-btn {
+    right: 30px !important;
+    bottom: 95px !important;
+}
+
+#floating-toc-btn i {
+    color: #293951;
+}
+
+/* 设置文章卡片标签样式 */
+article .article-tags .chip {
+    background-image: linear-gradient(to right,#2EC4B6 0%,#2EC4B6 100%);
+}
+
+/* 设置分页按钮icon的字体颜色 */
+.paging .row a {
+    /* color: #293951 !important; */
+    background-image: linear-gradient(to right,#293951 0%,#293951 100%) !important;
+}
+
+/* 设置文章详情页下面文章卡片的动画效果 */
+#prenext-posts [data-aos^=fade][data-aos^=fade].aos-animate:hover {
+    -o-animation: cardKartoon 1s ease-in-out;
+    -webkit-animation: cardKartoon 1s ease-in-out;
+    -moz-animation: cardKartoon 1s ease-in-out;
+    animation: cardKartoon 1s ease-in-out;
+}
+
+@keyframes cardKartoon {
+    0%{
+        transform: scale(1);
+    }
+
+    50%{
+        transform: scale(1.05);
+    }
+
+    100%{
+        transform: scale(1);
+    }
+}
+
+@-webkit-keyframes cardKartoon {
+    0%{
+        transform: scale(1);
+    }
+
+    50%{
+        transform: scale(1.05);
+    }
+
+    100%{
+        transform: scale(1);
+    }
+}
+
+@-moz-keyframes cardKartoon {
+    0%{
+        transform: scale(1);
+    }
+
+    50%{
+        transform: scale(1.05);
+    }
+
+    100%{
+        transform: scale(1);
+    }
+}
+
+@-o-keyframes cardKartoon {
+    0%{
+        transform: scale(1);
+    }
+
+    50%{
+        transform: scale(1.05);
+    }
+
+    100%{
+        transform: scale(1);
+    }
+}
