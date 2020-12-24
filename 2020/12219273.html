@@ -396,7 +396,7 @@ yum localinstall mysql57-community-release-el7-11.noarch.rpm<span aria-hidden="t
 <p>用 <code>systemctl status</code> 查看 MySQL 状态</p>
 <pre class="line-numbers language-none"><code class="language-none">systemctl status mysqld<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://upload-images.jianshu.io/upload_images/1458376-cd1d2a407337b5a2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1128/format/webp" alt="MySQL 启动状态"></p>
+<p><img src="https://pic.downk.cc/item/5fe4054f3ffa7d37b345786f.jpg" alt="MySQL 启动状态"></p>
 <h3 id="设置开机密码"><a href="#设置开机密码" class="headerlink" title="设置开机密码"></a>设置开机密码</h3><pre class="line-numbers language-none"><code class="language-none">systemctl enable mysqld
 # 重载所有修改过的配置文件
 systemctl daemon-reload<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
@@ -404,7 +404,7 @@ systemctl daemon-reload<span aria-hidden="true" class="line-numbers-rows"><span>
 <h3 id="修改root本地账户密码"><a href="#修改root本地账户密码" class="headerlink" title="修改root本地账户密码"></a>修改root本地账户密码</h3><p>MySQL 安装完成之后，生成的默认密码在 <code>/var/log/mysqld.log</code> 文件中。使用 grep 命令找到日志中的密码。</p>
 <pre class="line-numbers language-none"><code class="language-none">grep 'temporary password' /var/log/mysqld.log<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://upload-images.jianshu.io/upload_images/1458376-6694dca4f9eb39a3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1137/format/webp" alt="查看临时密码"></p>
+<p><img src="https://pic.downk.cc/item/5fe404c33ffa7d37b34507ac.jpg" alt="查看临时密码"></p>
 <p>临时密码就是localhost：后面的字段</p>
 <p>接下来我们准备进入MYSQL数据库</p>
 <pre class="line-numbers language-none"><code class="language-none">mysql -uroot -p<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -434,7 +434,7 @@ default-character-set=utf8<span aria-hidden="true" class="line-numbers-rows"><sp
 mysql -uroot -p
 show variables like 'character%';<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
-<p><img src="https://upload-images.jianshu.io/upload_images/1458376-5a83be282b3c7870.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/811/format/webp" alt="查看编码"></p>
+<p><img src="https://pic.downk.cc/item/5fe405043ffa7d37b34538d9.jpg" alt="查看编码"></p>
 <h2 id="2-远程连接"><a href="#2-远程连接" class="headerlink" title="2.远程连接"></a>2.远程连接</h2><h3 id="添加远程登录用户"><a href="#添加远程登录用户" class="headerlink" title="添加远程登录用户"></a>添加远程登录用户</h3><p>默认只允许root帐户在本地登录，如果要在其它机器上连接mysql，必须<strong>添加一个允许远程连接的账户</strong>。或者<del>修改root为允许远程连接</del>（不推荐）</p>
 <p>创建一个新用户</p>
 <pre class="line-numbers language-none"><code class="language-none">CREATE USER 'username'@'host' IDENTIFIED BY 'password';<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
