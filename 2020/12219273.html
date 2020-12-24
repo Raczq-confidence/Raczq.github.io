@@ -420,6 +420,7 @@ systemctl daemon-reload<span aria-hidden="true" class="line-numbers-rows"><span>
 <blockquote>
 <p>注意：mysql 5.7 默认安装了密码安全检查插件（validate_password），默认密码检查策略要求密码必须包含：大小写字母、数字和特殊符号，并且长度不能少于8位。否则会提示 ERROR 1819 (HY000): Your password does not satisfy the current policy requirements 错误。查看 <a target="_blank" rel="noopener" href="https://links.jianshu.com/go?to=https://dev.mysql.com/doc/refman/5.7/en/validate-password-options-variables.html%23sysvar_validate_password_policy">MySQL官网密码详细策略</a></p>
 </blockquote>
+<p><strong>注意：</strong>建议将密码设置的复杂一点，之前我有一位朋友，账号和密码都是root，导致被黑客劫持，向他索要比特币（真会挑人，都是穷*），虽然数据库没什么重要的东西，但是之前项目搭建的数据库全部木大，所以在这里建议各位尽量设置的复杂一点</p>
 <h3 id="设置默认编码为utf8"><a href="#设置默认编码为utf8" class="headerlink" title="设置默认编码为utf8"></a>设置默认编码为utf8</h3><p>mysql 安装后默认不支持中文，需要修改编码。<br>修改 <code>/etc/my.cnf</code> 配置文件，在相关节点（没有则自行添加）下添加编码配置，如下：</p>
 <pre class="line-numbers language-none"><code class="language-none">[mysqld]
 character-set-server=utf8
