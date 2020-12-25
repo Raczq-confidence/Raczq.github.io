@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="JS当中的深浅拷贝以及数组扁平化, Raczq&#39;s blog">
+    <meta name="keywords" content="数组去重以及排序, Raczq&#39;s blog">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>JS当中的深浅拷贝以及数组扁平化 | Raczq&#39;s blog</title>
+    <title>数组去重以及排序 | Raczq&#39;s blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -205,12 +205,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/4.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">JS当中的深浅拷贝以及数组扁平化</h1>
+                    <h1 class="description center-align post-title">数组去重以及排序</h1>
                 </div>
             </div>
         </div>
@@ -334,6 +334,10 @@
                                 <span class="chip bg-color">面试题</span>
                             </a> -->
                         
+                            <!-- <a href="/tags/%E7%AE%97%E6%B3%95/">
+                                <span class="chip bg-color">算法</span>
+                            </a> -->
+                        
                     </div>
                     
                 </div>
@@ -346,7 +350,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-12-24
+                    2020-12-25
                 </div>
                 
 
@@ -370,230 +374,175 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="1-深浅拷贝"><a href="#1-深浅拷贝" class="headerlink" title="1.深浅拷贝"></a>1.深浅拷贝</h2><p><strong>因为JS的变量包含两种不同数据类型的值：基本类型和引用类型</strong></p>
+                <h2 id="1-数组去重"><a href="#1-数组去重" class="headerlink" title="1.数组去重"></a>1.数组去重</h2><p>在前端开发中经常会出现这样一个问题，怎么去除数组的重复项，接下来我将为大家介绍数组去重的几种方法</p>
+<p>接下来的所有方法都会以下面的数组为例</p>
+<pre class="line-numbers language-none"><code class="language-none">var arr = [1,2,1,3,2,3,4,5]<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h3 id="Set集合去重"><a href="#Set集合去重" class="headerlink" title="Set集合去重"></a>Set集合去重</h3><p>ES6中新增了一种数据类型<code>Set</code>（集合），Set中的元素只会<strong>出现一次</strong>，即 Set 中的元素是唯一的。</p>
 <blockquote>
-<p>1.JS当中的基本数据类型包含以下几种：</p>
-<p>number，string，boolean，null，undefined，Symbol（ES6新增基本类型，之后会专门对他进行介绍）</p>
-<p>2.JS当中的引用数据类型：</p>
-<p>Object（Object，Array，Function）</p>
+<p><strong>注意：<code>NaN</code>和<code>undefined</code>都可以被存储在Set 中， <code>NaN</code>之间被视为相同的值（NaN被认为是相同的，尽管 NaN !== NaN）</strong></p>
 </blockquote>
-<p>两种数据类型最根本的区别在于两种变量的存储方式是不同的</p>
-<p><strong>JS存储变量的方式包含两种：栈内存（stack）和 堆内存（heap）</strong></p>
-<blockquote>
-<p>栈内存：自动分配内存空间，系统自动释放，里面存放的是基本类型的值和引用类型的地址</p>
-<p>堆内存：动态分配的内存，大小不定，也不会自动释放。里面存放引用类型的值。</p>
-</blockquote>
-<p><img src="https://pic.downk.cc/item/5fe424583ffa7d37b35c55fb.png" alt="JS的存储方式"></p>
-<p>因为这样的存储方式，所以JS种两种数据类型的数据传递方式也不一样</p>
-<ul>
-<li><p>基本数据类型采用的是值传递</p>
-<pre class="line-numbers language-none"><code class="language-none">let a = 10; // 定义一个变量a并赋值为10
-let b = a;  // 将a的值10赋值给b (a、b都是基本类型，值传递)
-b++;  // b自加
-console.log(a, b) // 10, 11<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>引用类型则是地址传递，将存放在栈内存中的地址赋值给接收的变量。</p>
-<pre class="line-numbers language-none"><code class="language-none">let a = ['a', 'b', 'c']; // 定义一个数组a并赋值 
-let b = a;   // 数组是引用类型,采用地址传递，将a的地址赋值给b
-b.push('d'); // 给b数组增加一个'd'元素
-console.log(a) // ['a', 'b', 'c', 'd']
-console.log(b) // ['a', 'b', 'c', 'd']<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>所以我们通过将数组转换为集合再转换回数组的方式来实现数组去重</p>
+<pre class="line-numbers language-none"><code class="language-none">arr = [...new Set(arr)]
+console.log(arr)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-</li>
-</ul>
-<p>深浅拷贝是指复制对象的级别深浅，具体来讲就是：</p>
-<ul>
-<li>浅拷贝是指复制对象的时候，只对第一层键值对进行独立的复制，如果对象内还有对象，则只能复制嵌套对象的地址</li>
-<li>深拷贝是指复制对象的时候完全的拷贝一份对象，即使嵌套了对象，两者也相互分离，修改一个对象的属性，也不会影响另一个。其实只要递归下去，把那些属性的值仍然是对象的再次进入对象内部，进行复制即可。</li>
-</ul>
-<p>下面将为大家介绍深浅拷贝的几种实现方式</p>
-<h3 id="浅拷贝"><a href="#浅拷贝" class="headerlink" title="浅拷贝"></a>浅拷贝</h3><pre class="line-numbers language-none"><code class="language-none">let obj = {
-	
-	a : 10,
-	b : [1,2,3],
-	c : {
-		x : 12
-	},
-	d : /^\d+$/ //正则表达式（也为引用数据类型）
-	
+<p><img src="https://pic.downk.cc/item/5fe4ad9a3ffa7d37b3360794.png" alt="输出结果"></p>
+<h3 id="对象去重"><a href="#对象去重" class="headerlink" title="对象去重"></a>对象去重</h3><p>因为向对象的已有属性进行添加时，属性的值会覆盖原来的值</p>
+<pre class="line-numbers language-none"><code class="language-none">var obj = {}
+obj.a = 1
+obj.a = 2
+console.log(obj.a) //2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>所以我们可以通过遍历数组，向一个空对象添加属性，重复的属性会被覆盖掉</p>
+<pre class="line-numbers language-none"><code class="language-none">var a = {}
+
+for( let i=0; i&lt;arr.length;i++ ) {
+	let item = arr[i]
+	a[item] = item
 }
 
-let obj2 = {}
-
-//浅拷贝
-for(let key in obj){
-	//判断属性是否为obj原型上的属性，是的话就结束循环
-	if(!obj.hasOwnProperty(key)) break;
-	obj2[key] = obj[key]
-	
+arr = []
+for(let i in a) {
+	arr.push(a[i])
 }
+console.log(arr)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-console.log(obj,obj2)
+<p><img src="https://pic.downk.cc/item/5fe4b0443ffa7d37b33a2b1e.png" alt="输出结果"></p>
+<p>还可以通过这种方式来进行数组去重，将对象作为工具，直接在原数组上进行操作，本质上与上一种没有区别</p>
+<pre class="line-numbers language-none"><code class="language-none">let a = {}
 
-console.log('obj == obj2',obj == obj2) //false
+for (let i = 0; i &lt; arr.length; i++) {
 
-console.log('obj === obj2',obj === obj2) //false
-
-console.log('obj.__proto__ == obj2.__proto__',obj.__proto__ == obj2.__proto__) //true
-
-obj2.c.x = 1000
-
-console.log(obj.c.x)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>因为浅拷贝的级别比较低，所以当我修改克隆后对象的属性（不为基本数据类型）时，原对象的属性也会被修改，原因就是引用数据类型会通过地址传递。</p>
-<h3 id="深拷贝"><a href="#深拷贝" class="headerlink" title="深拷贝"></a>深拷贝</h3><h4 id="1）JSON-parse和JSON-stringify"><a href="#1）JSON-parse和JSON-stringify" class="headerlink" title="1）JSON.parse和JSON.stringify"></a>1）<code>JSON.parse</code>和<code>JSON.stringify</code></h4><pre class="line-numbers language-none"><code class="language-none">let obj = {
-	
-	a : 10,
-	b : [1,2,3],
-	c : {
-		x : 12
+	let item = arr[i]
+	if(typeof a[item] !== 'undefined' ){
+		arr[i] = arr[arr.length-1]
+		arr.length --
+		i--
+		continue
 	}
- 			
-}
-
-let obj2 = JSON.parse(JSON.stringify(obj))
-console.log(obj2)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>这种实现方法在项目中经常会使用到，<strong>缺点就是先转换为字符串再转换为对象，会开辟新的空间，并且当原对象中包含有函数（<code>Function</code>），日期（<code>Date</code>），正则表达式（<code>RegExp</code>）类型的属性时</strong>，就会出现下面例子出现的问题</p>
-<pre class="line-numbers language-none"><code class="language-none">let obj = {
-	
-	a : 10,
-	b : [1,2,3],
-	c : {
-		x : 12
-	},
-	d : /^\d+$/,
-	e : function () {
-				
-	}
- 			
-}
-
-let obj2 = JSON.parse(JSON.stringify(obj))
-console.log(obj2)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>控制台输出的结果如下图所示</p>
-<p><img src="https://pic.downk.cc/item/5fe42d0d3ffa7d37b362df61.png" alt="拷贝有误"></p>
-<p>可以看出正则表达式类型的数据被转换为了{}，而函数类型的属性直接就消失不见了，所以我们可以采用下面的方式来进行深拷贝</p>
-<h4 id="2）递归转换"><a href="#2）递归转换" class="headerlink" title="2）递归转换"></a>2）递归转换</h4><pre class="line-numbers language-none"><code class="language-none">let obj = {
-	
-	a : 10,
-	b : [1,2,3],
-	c : {
-		x : 12
-	},
-	d : /^\d+$/,
-	e : function () {
-				
-	}
- 			
-}
-
-function deepClone (obj) {
-	//创建新的对象(通过这种方式创建的对象或者对象实例，他们的构造函数都是相同的)
-	let newObj = new obj.constructor()
-	
-	//判断传入的实参是否为空
-	if( obj === null ) return null
-			
-	//判断实参是否为对象(如果不为对象，则直接返回)
-	if( typeof obj !== "object" ) return obj
-	
-	//判断传入实参是否为函数
-	if( obj instanceof Function ){
-				
-		//创建返回值为新的Function实例
-		return new Function(obj)
-				
-	}
-			
-	//判断传入实参是否为正则表达式
-	if( obj instanceof RegExp ){
-				
-		//创建返回值为新的正则表达式实例
-		return new RegExp(obj)
-				
-	}
-			
-	//判断传入实参是否为Date
-	if( obj instanceof Date ){
-				
-		//创建返回值为新的Function实例
-		return new Date(obj)
-				
-	}
-			
-	//
-	for( let key in obj ){
-				
-		//需要对数据进行过滤
-		newObj[key] = deepClone(obj[key])
-				
-	}
-			
-	return newObj
+	a[item] = item
 			
 }
 		
-let obj2 = deepClone(obj)
-		
-console.log(obj,obj2)
-		
-console.log('obj2 === obj',obj2 === obj) //false
-		
-console.log('obj2.c === obj.c',obj2.c === obj.c) //false<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+console.log(arr)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p><img src="https://pic.downk.cc/item/5fe431f83ffa7d37b3667cf6.png" alt="执行结果"></p>
-<p>可以看到成功对obj对象进行了深拷贝</p>
-<h2 id="2-数组扁平化"><a href="#2-数组扁平化" class="headerlink" title="2.数组扁平化"></a>2.数组扁平化</h2><p>数组的扁平化，就是将一个嵌套多层的数组 array (嵌套可以是任何层数)转换为只有一层的数组。</p>
-<p>举个例子，假设有个名为 flatten 的函数可以做到数组扁平化，效果就会如下：</p>
-<pre class="line-numbers language-none"><code class="language-none">var arr = [1, [2, [3, 4]]]
-console.log(flatten(arr)) // [1, 2, 3, 4]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p><img src="https://pic.downk.cc/item/5fe4b44c3ffa7d37b340d1ff.png" alt="输出结果"></p>
+<p><strong>这种方法的好处就在于比遍历更加方便，更加迅速，但是缺点也可以从上图中看出，他改变了数组原来的顺序</strong></p>
+<h3 id="排序去重"><a href="#排序去重" class="headerlink" title="排序去重"></a>排序去重</h3><p>我们还可以通过排序之后去除相等的相邻项来实现数组去重</p>
+<pre class="line-numbers language-none"><code class="language-none">var arr = [1,2,5,3,2,3,4,1] //为了下文更好看出区别，这里决定采用这个数组
 
-<p>接下来我们将去尝试实现数组扁平化（下文数组扁平化的目标都将为下面的数组）</p>
-<pre class="line-numbers language-none"><code class="language-none">var arr = [
-	[1],
-	[2],
-	[3,4,[5,[6,[7]]]],
-	8
-] //这是一个“四层”数组<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h3 id="flat方法实现"><a href="#flat方法实现" class="headerlink" title="flat方法实现"></a><code>flat</code>方法实现</h3><p>flat方法是ES6新提出的方法</p>
-<p>flat方法会按照一个可指定的深度递归遍历数组，并将所有元素与遍历到的子数组中的元素合并为一个新数组返回。他挂载在Array.prototype上</p>
-<p>他需要传入一个数字，指定要提取嵌套数组的结构深度，默认值为 1，当传入参数为 3 时</p>
-<pre class="line-numbers language-none"><code class="language-none">arr = arr.flat(3)
-console.log(arr)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<p>结果如下图所示</p>
-<p><img src="https://pic.downk.cc/item/5fe436103ffa7d37b36930e2.png" alt="当参数为3时"></p>
-<p>当传入参数为 Infinity 时，Infinity 便是遍历无穷层数，将其转为“一维”数组</p>
-<pre class="line-numbers language-none"><code class="language-none">arr = arr.flat(Infinity)
-console.log(arr)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<p>结果如下图所示</p>
-<p><img src="https://pic.downk.cc/item/5fe436f63ffa7d37b369cfb4.png" alt="当参数为Infinity时"></p>
-<h3 id="toString方法"><a href="#toString方法" class="headerlink" title="toString方法"></a><code>toString</code>方法</h3><p>将需要扁平化的数组先转换为字符串，再转换为数组，之后将每一项变为数字，实现方法如下</p>
-<pre class="line-numbers language-none"><code class="language-none">arr = arr.toString().split(',').map( item =&gt; Number(item) )
-console.log(arr)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<p>结果如下图所示</p>
-<p><img src="https://pic.downk.cc/item/5fe43b263ffa7d37b36cdd2f.png" alt="输出结果"></p>
-<h3 id="利用正则表达式"><a href="#利用正则表达式" class="headerlink" title="利用正则表达式"></a>利用正则表达式</h3><pre class="line-numbers language-none"><code class="language-none">arr = JSON.stringify(arr).replace(/(\[|\])/g,'').split(',').map( item =&gt; Number(item) )
-console.log(arr)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<p>结果如下图所示</p>
-<p><img src="https://pic.downk.cc/item/5fe43b6f3ffa7d37b36d0841.png" alt="输出结果"></p>
-<h3 id="循环验证"><a href="#循环验证" class="headerlink" title="循环验证"></a>循环验证</h3><p>循环验证元素是否为数组(判断条件中的回调函数也可以写<code>Array.isArray(item))</code></p>
-<pre class="line-numbers language-none"><code class="language-none">while( arr.some( item =&gt; item instanceof Array ) ){
+function deleteRepeat (arr) {
 	
-	arr = [].concat(...arr)
+	//对数组进行升序排序
+	arr.sort()
+	//对数组进行遍历
+	for( let i = 0; i &lt; arr.length; i++ ) {
+	
+		//判断其不是第一项并且与前一项相等
+		if( i != 0 &amp;&amp; arr[i] == arr[i-1] ) {
+		
+			//删除重复项
+			arr.splice(i,1)
+				
+		}
+			
+	}
+	return arr
 			
 }
+		
+console.log(deleteRepeat(arr))<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-console.log(arr)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><img src="https://pic.downk.cc/item/5fe4b8a63ffa7d37b3475235.png" alt="输出结果"></p>
+<p>可以看到数组排序成功，<strong>但是与上一个方法一样，同样会改变数组的顺序</strong></p>
+<p>以上就是数组去重的几种常见方法</p>
+<h2 id="2-数组排序"><a href="#2-数组排序" class="headerlink" title="2.数组排序"></a>2.数组排序</h2><p>数组排序的方法不需要多说，但是我们这里不打算使用sort等类似的排序方法，我们通过最基本的方法来实现，本文会介绍三种排序：冒泡排序，选择排序，快速排序。如果有朋友感兴趣可以去查找更多的排序方法，本文将不再过多赘述（本文在此只提出实现方法，具体思路请自行百度）</p>
+<h3 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h3><pre class="line-numbers language-none"><code class="language-none">let arr = [12,8,15,16,1,24]
+		
+for(let i=0; i &lt; arr.length-1; i++){
+			
+	for(let j=0; j &lt; arr.length-1-i; j++){
+				
+		if(arr[j]&gt;arr[j+1]) {
+					
+			let temp = arr[j]
+			arr[j] = arr[j+1]
+			arr[j+1] = temp
+					
+		}
+				
+	}
+			
+}
+		
+console.log(arr)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>结果如下图所示</p>
-<p><img src="https://pic.downk.cc/item/5fe43b993ffa7d37b36d23e8.png" alt="输出结果"></p>
+<h3 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h3><pre class="line-numbers language-none"><code class="language-none">let arr = [12,8,15,16,1,24]
+		
+let A = []
+		
+A.push(arr[0])
+		
+for(let i=1; i&lt;arr.length; i++){
+			
+	for(let j=A.length-1; j&gt;=0; j--){
+				
+		if(arr[i]&gt;A[j]) {
+					
+			A.splice(j+1,0,arr[i])
+			break
+					
+		}
+				
+		if(j === 0) {
+					
+			A.unshift(arr[i])
+					
+		}
+				
+	}
+			
+}
+		
+arr = A
+console.log(arr)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h3><pre class="line-numbers language-none"><code class="language-none">//快速排序(相比冒泡与插入，性能最好)
+let arr = [12,8,15,16,1,24]
+		
+function quik (array) {
+			
+	//判断数组是否只有一个元素
+	if(array.length &lt;= 1){
+				
+		return array
+				
+	}
+			
+	//获取中间值
+	let middleIndex = parseInt(array.length/2)
+	let middle = array.splice(middleIndex,1)[0]
+			
+	//设置左右数组
+	let arrLeft = [],
+		arrRight = []
+				
+	for(let i=0; i&lt;array.length; i++){
+				
+		//当选取项大于中间值，将他添加到右数组；当选取项小于中间值，将他添加在左数组
+		array[i]&gt;middle ? arrRight.push(array[i]) : arrLeft.push(array[i])
+				
+	}
+			
+	//递归调用函数对左右数组进行排序,之后对他们进行拼接
+	return quik(arrLeft).concat(middle,quik(arrRight))
+			
+}
+		
+arr = quik(arr)
+		
+console.log(arr)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 
                 
             </div>
@@ -620,7 +569,7 @@ console.log(arr)<span aria-hidden="true" class="line-numbers-rows"><span></span>
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://81.70.166.55/2020/122431219.html">https://81.70.166.55/2020/122431219.html</a>
+                    <a href="https://81.70.166.55/2020/122511745.html">https://81.70.166.55/2020/122511745.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -664,6 +613,10 @@ console.log(arr)<span aria-hidden="true" class="line-numbers-rows"><span></span>
                             
                                 <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/">
                                     <span class="chip bg-color">面试题</span>
+                                </a>
+                            
+                                <a href="/tags/%E7%AE%97%E6%B3%95/">
+                                    <span class="chip bg-color">算法</span>
                                 </a>
                             
                         </div>
@@ -970,9 +923,10 @@ console.log(arr)<span aria-hidden="true" class="line-numbers-rows"><span></span>
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2020/122511745.html">
                     <div class="card-image">
@@ -990,9 +944,9 @@ console.log(arr)<span aria-hidden="true" class="line-numbers-rows"><span></span>
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-12-25
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-12-25
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -1001,6 +955,7 @@ console.log(arr)<span aria-hidden="true" class="line-numbers-rows"><span></span>
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -1027,13 +982,13 @@ console.log(arr)<span aria-hidden="true" class="line-numbers-rows"><span></span>
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/12219273.html">
+                <a href="/2020/122431219.html">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="云服务器搭建MySQL并远程连接">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="JS当中的深浅拷贝以及数组扁平化">
                         
-                        <span class="card-title">云服务器搭建MySQL并远程连接</span>
+                        <span class="card-title">JS当中的深浅拷贝以及数组扁平化</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -1044,7 +999,7 @@ console.log(arr)<span aria-hidden="true" class="line-numbers-rows"><span></span>
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-12-21
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-12-24
                             </span>
                         <span class="publish-author">
                             
@@ -1057,8 +1012,12 @@ console.log(arr)<span aria-hidden="true" class="line-numbers-rows"><span></span>
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/">
-                        <span class="chip bg-color">服务器</span>
+                    <a href="/tags/JS/">
+                        <span class="chip bg-color">JS</span>
+                    </a>
+                    
+                    <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/">
+                        <span class="chip bg-color">面试题</span>
                     </a>
                     
                 </div>
