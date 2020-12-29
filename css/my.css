@@ -99,7 +99,7 @@ ul.mobile-menu-list {
 
 /* 设置社交模块的位置 */
 .cover-social-link {
-    top: 19vh;
+    top: auto;
 }
 
 /* 设置footer样式 */

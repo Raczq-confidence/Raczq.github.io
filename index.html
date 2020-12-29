@@ -243,11 +243,32 @@
     }
 
     /* 设置文章卡片容器的位置向上移动 */
-    /* main.content */
-    article.container {
+    /* article.container {
         position: relative;
-        /* top: -150px; */
         top: -6.5rem;
+    } */
+    /*小屏幕下(手机类)的样式*/
+    @media only screen and (max-width: 601px) {
+        article.container {
+            position: relative;
+            top: -6.5rem;
+        }
+    }
+
+    /*中等屏幕下(平板类)的样式*/
+    @media only screen and (min-width: 600px) and (max-width: 992px) {
+        article.container {
+            position: relative;
+            top: -6.5rem;
+        }
+    }
+
+    /*大屏幕下(桌面类)的样式*/
+    @media only screen and (min-width: 993px) {
+        article.container {
+            position: relative;
+            top: -6.5rem;
+        }
     }
 </style>
 
@@ -397,6 +418,59 @@
     <!-- 所有文章卡片 -->
     <article id="articles" class="container articles">
         <div class="row article-row">
+            
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2020/122921641.html">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="call，apply，bind的区别以及实现">
+                            
+                            <span class="card-title">call，apply，bind的区别以及实现</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                1. call，apply，bind的区别首先先来简单地说一下三者的共同点：
+
+三者都是用来改变函数体内部的this指向
+第一个参数都是this要指向的对象
+后续参数都可以被用来进行传参
+
+一下是MDN文档关于call，apply，bind
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-12-29
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-user fa-fw"></i>
+                                Raczq
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/JS/">
+                            <span class="chip bg-color">JS</span>
+                        </a>
+                        
+                        <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/">
+                            <span class="chip bg-color">面试题</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
             
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">

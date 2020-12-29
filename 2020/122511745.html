@@ -376,172 +376,172 @@
             <div id="articleContent">
                 <h2 id="1-数组去重"><a href="#1-数组去重" class="headerlink" title="1.数组去重"></a>1.数组去重</h2><p>在前端开发中经常会出现这样一个问题，怎么去除数组的重复项，接下来我将为大家介绍数组去重的几种方法</p>
 <p>接下来的所有方法都会以下面的数组为例</p>
-<pre class="line-numbers language-none"><code class="language-none">var arr = [1,2,1,3,2,3,4,5]<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">var</span> arr <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <h3 id="Set集合去重"><a href="#Set集合去重" class="headerlink" title="Set集合去重"></a>Set集合去重</h3><p>ES6中新增了一种数据类型<code>Set</code>（集合），Set中的元素只会<strong>出现一次</strong>，即 Set 中的元素是唯一的。</p>
 <blockquote>
 <p><strong>注意：<code>NaN</code>和<code>undefined</code>都可以被存储在Set 中， <code>NaN</code>之间被视为相同的值（NaN被认为是相同的，尽管 NaN !== NaN）</strong></p>
 </blockquote>
 <p>所以我们通过将数组转换为集合再转换回数组的方式来实现数组去重</p>
-<pre class="line-numbers language-none"><code class="language-none">arr = [...new Set(arr)]
-console.log(arr)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript">arr <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token operator">...</span><span class="token keyword">new</span> <span class="token class-name">Set</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span><span class="token punctuation">]</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p><img src="https://pic.downk.cc/item/5fe4ad9a3ffa7d37b3360794.png" alt="输出结果"></p>
 <h3 id="对象去重"><a href="#对象去重" class="headerlink" title="对象去重"></a>对象去重</h3><p>因为向对象的已有属性进行添加时，属性的值会覆盖原来的值</p>
-<pre class="line-numbers language-none"><code class="language-none">var obj = {}
-obj.a = 1
-obj.a = 2
-console.log(obj.a) //2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">var</span> obj <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+obj<span class="token punctuation">.</span>a <span class="token operator">=</span> <span class="token number">1</span>
+obj<span class="token punctuation">.</span>a <span class="token operator">=</span> <span class="token number">2</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>obj<span class="token punctuation">.</span>a<span class="token punctuation">)</span> <span class="token comment">//2</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>所以我们可以通过遍历数组，向一个空对象添加属性，重复的属性会被覆盖掉</p>
-<pre class="line-numbers language-none"><code class="language-none">var a = {}
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">var</span> a <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
 
-for( let i=0; i&lt;arr.length;i++ ) {
-	let item = arr[i]
-	a[item] = item
-}
+<span class="token keyword">for</span><span class="token punctuation">(</span> <span class="token keyword">let</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span> i<span class="token operator">&lt;</span>arr<span class="token punctuation">.</span>length<span class="token punctuation">;</span>i<span class="token operator">++</span> <span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token keyword">let</span> item <span class="token operator">=</span> arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+	a<span class="token punctuation">[</span>item<span class="token punctuation">]</span> <span class="token operator">=</span> item
+<span class="token punctuation">}</span>
 
-arr = []
-for(let i in a) {
-	arr.push(a[i])
-}
-console.log(arr)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+arr <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token keyword">in</span> a<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	arr<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>a<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p><img src="https://pic.downk.cc/item/5fe4b0443ffa7d37b33a2b1e.png" alt="输出结果"></p>
 <p>还可以通过这种方式来进行数组去重，将对象作为工具，直接在原数组上进行操作，本质上与上一种没有区别</p>
-<pre class="line-numbers language-none"><code class="language-none">let a = {}
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">let</span> a <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
 
-for (let i = 0; i &lt; arr.length; i++) {
+<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> arr<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 
-	let item = arr[i]
-	if(typeof a[item] !== 'undefined' ){
-		arr[i] = arr[arr.length-1]
-		arr.length --
-		i--
-		continue
-	}
-	a[item] = item
+	<span class="token keyword">let</span> item <span class="token operator">=</span> arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token keyword">typeof</span> a<span class="token punctuation">[</span>item<span class="token punctuation">]</span> <span class="token operator">!==</span> <span class="token string">'undefined'</span> <span class="token punctuation">)</span><span class="token punctuation">{</span>
+		arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> arr<span class="token punctuation">[</span>arr<span class="token punctuation">.</span>length<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span>
+		arr<span class="token punctuation">.</span>length <span class="token operator">--</span>
+		i<span class="token operator">--</span>
+		<span class="token keyword">continue</span>
+	<span class="token punctuation">}</span>
+	a<span class="token punctuation">[</span>item<span class="token punctuation">]</span> <span class="token operator">=</span> item
 			
-}
+<span class="token punctuation">}</span>
 		
-console.log(arr)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p><img src="https://pic.downk.cc/item/5fe4b44c3ffa7d37b340d1ff.png" alt="输出结果"></p>
 <p><strong>这种方法的好处就在于比遍历更加方便，更加迅速，但是缺点也可以从上图中看出，他改变了数组原来的顺序</strong></p>
 <h3 id="排序去重"><a href="#排序去重" class="headerlink" title="排序去重"></a>排序去重</h3><p>我们还可以通过排序之后去除相等的相邻项来实现数组去重</p>
-<pre class="line-numbers language-none"><code class="language-none">var arr = [1,2,5,3,2,3,4,1] //为了下文更好看出区别，这里决定采用这个数组
+<pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">var</span> arr <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token comment">//为了下文更好看出区别，这里决定采用这个数组</span>
 
-function deleteRepeat (arr) {
+<span class="token keyword">function</span> <span class="token function">deleteRepeat</span> <span class="token punctuation">(</span><span class="token parameter">arr</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	
-	//对数组进行升序排序
-	arr.sort()
-	//对数组进行遍历
-	for( let i = 0; i &lt; arr.length; i++ ) {
+	<span class="token comment">//对数组进行升序排序</span>
+	arr<span class="token punctuation">.</span><span class="token function">sort</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	<span class="token comment">//对数组进行遍历</span>
+	<span class="token keyword">for</span><span class="token punctuation">(</span> <span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> arr<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span> <span class="token punctuation">)</span> <span class="token punctuation">{</span>
 	
-		//判断其不是第一项并且与前一项相等
-		if( i != 0 &amp;&amp; arr[i] == arr[i-1] ) {
+		<span class="token comment">//判断其不是第一项并且与前一项相等</span>
+		<span class="token keyword">if</span><span class="token punctuation">(</span> i <span class="token operator">!=</span> <span class="token number">0</span> <span class="token operator">&amp;&amp;</span> arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">==</span> arr<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token punctuation">)</span> <span class="token punctuation">{</span>
 		
-			//删除重复项
-			arr.splice(i,1)
+			<span class="token comment">//删除重复项</span>
+			arr<span class="token punctuation">.</span><span class="token function">splice</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span>
 				
-		}
+		<span class="token punctuation">}</span>
 			
-	}
-	return arr
+	<span class="token punctuation">}</span>
+	<span class="token keyword">return</span> arr
 			
-}
+<span class="token punctuation">}</span>
 		
-console.log(deleteRepeat(arr))<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token function">deleteRepeat</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p><img src="https://pic.downk.cc/item/5fe4b8a63ffa7d37b3475235.png" alt="输出结果"></p>
 <p>可以看到数组排序成功，<strong>但是与上一个方法一样，同样会改变数组的顺序</strong></p>
 <p>以上就是数组去重的几种常见方法</p>
 <h2 id="2-数组排序"><a href="#2-数组排序" class="headerlink" title="2.数组排序"></a>2.数组排序</h2><p>数组排序的方法不需要多说，但是我们这里不打算使用sort等类似的排序方法，我们通过最基本的方法来实现，本文会介绍三种排序：冒泡排序，选择排序，快速排序。如果有朋友感兴趣可以去查找更多的排序方法，本文将不再过多赘述（本文在此只提出实现方法，具体思路请自行百度）</p>
-<h3 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h3><pre class="line-numbers language-none"><code class="language-none">let arr = [12,8,15,16,1,24]
+<h3 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h3><pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">let</span> arr <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">12</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token number">15</span><span class="token punctuation">,</span><span class="token number">16</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">24</span><span class="token punctuation">]</span>
 		
-for(let i=0; i &lt; arr.length-1; i++){
+<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">let</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> arr<span class="token punctuation">.</span>length<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
 			
-	for(let j=0; j &lt; arr.length-1-i; j++){
+	<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">let</span> j<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> arr<span class="token punctuation">.</span>length<span class="token operator">-</span><span class="token number">1</span><span class="token operator">-</span>i<span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
 				
-		if(arr[j]&gt;arr[j+1]) {
+		<span class="token keyword">if</span><span class="token punctuation">(</span>arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">&gt;</span>arr<span class="token punctuation">[</span>j<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 					
-			let temp = arr[j]
-			arr[j] = arr[j+1]
-			arr[j+1] = temp
+			<span class="token keyword">let</span> temp <span class="token operator">=</span> arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span>
+			arr<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> arr<span class="token punctuation">[</span>j<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span>
+			arr<span class="token punctuation">[</span>j<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> temp
 					
-		}
+		<span class="token punctuation">}</span>
 				
-	}
+	<span class="token punctuation">}</span>
 			
-}
+<span class="token punctuation">}</span>
 		
-console.log(arr)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h3><pre class="line-numbers language-none"><code class="language-none">let arr = [12,8,15,16,1,24]
+<h3 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h3><pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">let</span> arr <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">12</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token number">15</span><span class="token punctuation">,</span><span class="token number">16</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">24</span><span class="token punctuation">]</span>
 		
-let A = []
+<span class="token keyword">let</span> <span class="token constant">A</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
 		
-A.push(arr[0])
+<span class="token constant">A</span><span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>arr<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
 		
-for(let i=1; i&lt;arr.length; i++){
+<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">let</span> i<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span> i<span class="token operator">&lt;</span>arr<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
 			
-	for(let j=A.length-1; j&gt;=0; j--){
+	<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">let</span> j<span class="token operator">=</span><span class="token constant">A</span><span class="token punctuation">.</span>length<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span> j<span class="token operator">&gt;=</span><span class="token number">0</span><span class="token punctuation">;</span> j<span class="token operator">--</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
 				
-		if(arr[i]&gt;A[j]) {
+		<span class="token keyword">if</span><span class="token punctuation">(</span>arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">&gt;</span><span class="token constant">A</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 					
-			A.splice(j+1,0,arr[i])
-			break
+			<span class="token constant">A</span><span class="token punctuation">.</span><span class="token function">splice</span><span class="token punctuation">(</span>j<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span>arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span>
+			<span class="token keyword">break</span>
 					
-		}
+		<span class="token punctuation">}</span>
 				
-		if(j === 0) {
+		<span class="token keyword">if</span><span class="token punctuation">(</span>j <span class="token operator">===</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 					
-			A.unshift(arr[i])
+			<span class="token constant">A</span><span class="token punctuation">.</span><span class="token function">unshift</span><span class="token punctuation">(</span>arr<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span>
 					
-		}
+		<span class="token punctuation">}</span>
 				
-	}
+	<span class="token punctuation">}</span>
 			
-}
+<span class="token punctuation">}</span>
 		
-arr = A
-console.log(arr)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+arr <span class="token operator">=</span> <span class="token constant">A</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h3><pre class="line-numbers language-none"><code class="language-none">//快速排序(相比冒泡与插入，性能最好)
-let arr = [12,8,15,16,1,24]
+<h3 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h3><pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">//快速排序(相比冒泡与插入，性能最好)</span>
+<span class="token keyword">let</span> arr <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">12</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token number">15</span><span class="token punctuation">,</span><span class="token number">16</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">24</span><span class="token punctuation">]</span>
 		
-function quik (array) {
+<span class="token keyword">function</span> <span class="token function">quik</span> <span class="token punctuation">(</span><span class="token parameter">array</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 			
-	//判断数组是否只有一个元素
-	if(array.length &lt;= 1){
+	<span class="token comment">//判断数组是否只有一个元素</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>array<span class="token punctuation">.</span>length <span class="token operator">&lt;=</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
 				
-		return array
+		<span class="token keyword">return</span> array
 				
-	}
+	<span class="token punctuation">}</span>
 			
-	//获取中间值
-	let middleIndex = parseInt(array.length/2)
-	let middle = array.splice(middleIndex,1)[0]
+	<span class="token comment">//获取中间值</span>
+	<span class="token keyword">let</span> middleIndex <span class="token operator">=</span> <span class="token function">parseInt</span><span class="token punctuation">(</span>array<span class="token punctuation">.</span>length<span class="token operator">/</span><span class="token number">2</span><span class="token punctuation">)</span>
+	<span class="token keyword">let</span> middle <span class="token operator">=</span> array<span class="token punctuation">.</span><span class="token function">splice</span><span class="token punctuation">(</span>middleIndex<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
 			
-	//设置左右数组
-	let arrLeft = [],
-		arrRight = []
+	<span class="token comment">//设置左右数组</span>
+	<span class="token keyword">let</span> arrLeft <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+		arrRight <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
 				
-	for(let i=0; i&lt;array.length; i++){
+	<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">let</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span> i<span class="token operator">&lt;</span>array<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
 				
-		//当选取项大于中间值，将他添加到右数组；当选取项小于中间值，将他添加在左数组
-		array[i]&gt;middle ? arrRight.push(array[i]) : arrLeft.push(array[i])
+		<span class="token comment">//当选取项大于中间值，将他添加到右数组；当选取项小于中间值，将他添加在左数组</span>
+		array<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">&gt;</span>middle <span class="token operator">?</span> arrRight<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>array<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">:</span> arrLeft<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>array<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span>
 				
-	}
+	<span class="token punctuation">}</span>
 			
-	//递归调用函数对左右数组进行排序,之后对他们进行拼接
-	return quik(arrLeft).concat(middle,quik(arrRight))
+	<span class="token comment">//递归调用函数对左右数组进行排序,之后对他们进行拼接</span>
+	<span class="token keyword">return</span> <span class="token function">quik</span><span class="token punctuation">(</span>arrLeft<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">concat</span><span class="token punctuation">(</span>middle<span class="token punctuation">,</span><span class="token function">quik</span><span class="token punctuation">(</span>arrRight<span class="token punctuation">)</span><span class="token punctuation">)</span>
 			
-}
+<span class="token punctuation">}</span>
 		
-arr = quik(arr)
+arr <span class="token operator">=</span> <span class="token function">quik</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span>
 		
-console.log(arr)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
                 
@@ -923,18 +923,17 @@ console.log(arr)<span aria-hidden="true" class="line-numbers-rows"><span></span>
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2020/122511745.html">
+                <a href="/2020/122921641.html">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="数组去重以及排序">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="call，apply，bind的区别以及实现">
                         
-                        <span class="card-title">数组去重以及排序</span>
+                        <span class="card-title">call，apply，bind的区别以及实现</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -944,9 +943,9 @@ console.log(arr)<span aria-hidden="true" class="line-numbers-rows"><span></span>
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-12-25
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2020-12-29
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -955,7 +954,6 @@ console.log(arr)<span aria-hidden="true" class="line-numbers-rows"><span></span>
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
@@ -965,10 +963,6 @@ console.log(arr)<span aria-hidden="true" class="line-numbers-rows"><span></span>
                     
                     <a href="/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/">
                         <span class="chip bg-color">面试题</span>
-                    </a>
-                    
-                    <a href="/tags/%E7%AE%97%E6%B3%95/">
-                        <span class="chip bg-color">算法</span>
                     </a>
                     
                 </div>
