@@ -515,7 +515,7 @@
 <li>不能有<code>v-if</code>，<code>v-else</code>，<code>v-for</code>等指令</li>
 <li>不能是内置的组件，即<code>slot</code>，<code>component</code></li>
 <li>父节点不能是带有<code>v-for</code>的template</li>
-<li>不存在动态节点才有的属性，静态节点的属性范围：<code>type</code>、<code>tag</code>、<code>attrsList</code>、<code>attrMap</code>、<code>plain</code>、<code>parent</code>、<code>children</code>、<code>attrs</code>、<code>staticClass</code>和<code>staticStyle</code>）</li>
+<li>不存在动态节点才有的属性（静态节点的属性范围：<code>type</code>、<code>tag</code>、<code>attrsList</code>、<code>attrMap</code>、<code>plain</code>、<code>parent</code>、<code>children</code>、<code>attrs</code>、<code>staticClass</code>和<code>staticStyle</code>）</li>
 </ol>
 <p>伪代码如下：</p>
 <pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token keyword">function</span> <span class="token function">isStatic</span> <span class="token punctuation">(</span><span class="token parameter">node</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
